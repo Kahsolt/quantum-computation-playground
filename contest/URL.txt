@@ -1,0 +1,17 @@
+[大赛主页]
+https://contest.originqc.com.cn/
+https://contest.originqc.com.cn/contest
+
+[量子计算大赛动态]
+https://contest.originqc.com.cn/news
+
+[课程]
+https://learn.originqc.com.cn/course
+https://learn.originqc.com.cn/courseinfo/5/55
+
+[练习答题]
+https://contest.originqc.com.cn/contest/exercise?contestTrackId=4
+
+[历史比赛回顾]
+https://learn.originqc.com.cn/courseinfo/2/55
+https://learn.originqc.com.cn/courseinfo/2/56

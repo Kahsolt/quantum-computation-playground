@@ -1,0 +1,18 @@
+# meta
+.vscode/
+__pycache__/
+.ipynb_checkpoints/
+
+# data
+data/
+
+# OriginQ contest materials+
+contest/*
+!contest/URL.txt
+
+# logs & weights
+log/
+
+# repos
+repo/*
+!repo/*.cmd
