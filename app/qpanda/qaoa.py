@@ -69,7 +69,7 @@ if __name__=="__main__":
     'Z3 Z5': 0.1,
     'Z3 Z6': 0.1,
   }
-  Hp = PauliOperator(problem1)
+  Hp = PauliOperator(problem2)
   qubit_num = Hp.getMaxIndex() + 1
   print('qubit_num:', qubit_num)
 
@@ -77,7 +77,7 @@ if __name__=="__main__":
   qlist = machine.qAlloc_many(qubit_num)
 
   step  = 4   # 论文中的整数 p
-  beta  = var(np.ones((step, 1)).astype(np.float64), True)
+  beta  = var(np.ones((step, 1)).astype(np.float64), True)    # requires_grad=True
   gamma = var(np.ones((step, 1)).astype(np.float64), True)
 
   vqc = VariationalQuantumCircuit()
@@ -91,7 +91,7 @@ if __name__=="__main__":
 
   leaves = optimizer.get_variables()
   betas, gammas, losses = [], [], []
-  for i in range(100):
+  for i in range(40):
     optimizer.run(leaves, 0)
     loss_value = optimizer.get_loss()
     losses.append(loss_value)
@@ -105,6 +105,7 @@ if __name__=="__main__":
 
   # 验证结果
   prog = QProg() << vqc.feed()
+  print(prog)
   directly_run(prog)
   result = quick_measure(qlist, 1000)
   print(result)

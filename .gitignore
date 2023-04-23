@@ -5,6 +5,10 @@ __pycache__/
 
 # data
 data/
+ref/
+
+# generated
+api_list*.txt
 
 # OriginQ contest materials+
 contest/*

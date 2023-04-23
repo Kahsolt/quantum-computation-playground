@@ -3,9 +3,8 @@
 # Create Time: 2022/12/27 
 
 from pyqpanda import *
-from pyvqnet.tensor import tensor, QTensor
-from pyvqnet import nn, qnn
-from pyvqnet.optim import Adam
+from pyvqnet.tensor import QTensor
+from pyvqnet import qnn
 
 def qcricuit(x, param, qubits, cubits, qvm):
   c = QCircuit()
@@ -23,8 +22,7 @@ def qcricuit(x, param, qubits, cubits, qvm):
   prog = QProg() << c
   print(prog)
   
-  rlt_prob = qnn.ProbsMeasure([0, 2], prog, qvm, qubits)
-  return rlt_prob
+  return qnn.ProbsMeasure([0, 2], prog, qvm, qubits)
 
 param_num  = 3
 num_qubits = 4
