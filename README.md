@@ -87,6 +87,7 @@ OriginQ Contest Materials: [https://contest.originqc.com.cn/](https://contest.or
   - 写给IT人的量子计算教程系列: [https://zhuanlan.zhihu.com/p/332547283](https://zhuanlan.zhihu.com/p/332547283)
 - @拟态机器：[T-T(还没更呢)]
   - 经典教材要点抄书和课后题库
+
 ----
 
 by Armit

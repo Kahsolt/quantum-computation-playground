@@ -14,57 +14,49 @@ from pyvqnet.qnn.qdrl.vqnet_model import qdrl_circuit
 from pyvqnet.qnn.quantumlayer import QuantumLayer
 from pyvqnet.optim import adam
 from pyvqnet.nn.loss import BinaryCrossEntropy, CategoricalCrossEntropy, SoftmaxCrossEntropy, CrossEntropyLoss
-from pyvqnet.nn.module import Module
 
 
 # 待训练参数个数
 param_num = 9
 # 量子计算模块量子比特数
 qbit_num  = 1
-class Model(Module):
-  def __init__(self):
-    super(Model, self).__init__()
 
-    def qdrl_circuit(input, weights, qlist, clist, machine):
-      x1     = input  .squeeze()    # [3]
-      param1 = weights.squeeze()    # [9]
+def qdrl_circuit(input, weights, qlist, clist, machine):
+  x1     = input  .squeeze()    # [3]
+  param1 = weights.squeeze()    # [9]
 
-      circult = pq.QCircuit()
-      if 'layer 0':
-        circult.insert(pq.RZ(qlist[0], x1[0]))    # RZ编码横坐标x到旋转角度
-        circult.insert(pq.RY(qlist[0], x1[1]))    # RY编码纵坐标y到旋转角度
-        #circult.insert(pq.RZ(qlist[0], x1[2]))
-        circult.insert(pq.RZ(qlist[0], param1[0]))
-        circult.insert(pq.RY(qlist[0], param1[1]))
-        #circult.insert(pq.RZ(qlist[0], param1[2]))
+  circult = pq.QCircuit()
+  if 'layer 0':
+    circult.insert(pq.RZ(qlist[0], x1[0]))    # RZ编码横坐标x到旋转角度
+    circult.insert(pq.RY(qlist[0], x1[1]))    # RY编码纵坐标y到旋转角度
+    #circult.insert(pq.RZ(qlist[0], x1[2]))
+    circult.insert(pq.RZ(qlist[0], param1[0]))
+    circult.insert(pq.RY(qlist[0], param1[1]))
+    #circult.insert(pq.RZ(qlist[0], param1[2]))
 
-      if 'layer 1':
-        circult.insert(pq.RZ(qlist[0], x1[0]))
-        circult.insert(pq.RY(qlist[0], x1[1]))
-        #circult.insert(pq.RZ(qlist[0], x1[2]))
-        circult.insert(pq.RZ(qlist[0], param1[3]))
-        circult.insert(pq.RY(qlist[0], param1[4]))
-        #circult.insert(pq.RZ(qlist[0], param1[5]))
-        
-      if 'layer 2':
-        circult.insert(pq.RZ(qlist[0], x1[0]))
-        circult.insert(pq.RY(qlist[0], x1[1]))
-        #circult.insert(pq.RZ(qlist[0], x1[2]))
-        circult.insert(pq.RZ(qlist[0], param1[6]))
-        circult.insert(pq.RY(qlist[0], param1[7]))
-        #circult.insert(pq.RZ(qlist[0], param1[8]))
+  if 'layer 1':
+    circult.insert(pq.RZ(qlist[0], x1[0]))
+    circult.insert(pq.RY(qlist[0], x1[1]))
+    #circult.insert(pq.RZ(qlist[0], x1[2]))
+    circult.insert(pq.RZ(qlist[0], param1[3]))
+    circult.insert(pq.RY(qlist[0], param1[4]))
+    #circult.insert(pq.RZ(qlist[0], param1[5]))
+    
+  if 'layer 2':
+    circult.insert(pq.RZ(qlist[0], x1[0]))
+    circult.insert(pq.RY(qlist[0], x1[1]))
+    #circult.insert(pq.RZ(qlist[0], x1[2]))
+    circult.insert(pq.RZ(qlist[0], param1[6]))
+    circult.insert(pq.RY(qlist[0], param1[7]))
+    #circult.insert(pq.RZ(qlist[0], param1[8]))
 
-      prog = pq.QProg() << circult
-      #print(prog)
+  prog = pq.QProg() << circult
+  #print(prog)
 
-      prob = machine.prob_run_dict(prog, qlist, -1)
-      prob = list(prob.values())    # => 概率分布列
-      return prob
-      
-    self.pqc = QuantumLayer(qdrl_circuit, param_num, 'cpu', qbit_num)
+  prob = machine.prob_run_dict(prog, qlist, -1)
+  prob = list(prob.values())    # => 概率分布列
+  return prob
 
-  def forward(self, x):
-    return self.pqc(x)
 
 # 随机产生待训练数据的函数
 # 单位正方形内投点，单位圆内标记为1，之外标记为0
@@ -127,7 +119,7 @@ def get_correct_count(pred, label):
   return np.sum(pred == truth)
 
 
-model = Model()
+model = QuantumLayer(qdrl_circuit, param_num, 'cpu', qbit_num)
 optimizer = adam.Adam(model.parameters(), lr=0.6)
 creterion = BinaryCrossEntropy()
 #creterion = CategoricalCrossEntropy()
