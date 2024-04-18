@@ -28,7 +28,7 @@ param_num  = 3
 num_qubits = 4
 pqc = qnn.QuantumLayer(qcricuit, param_num, 'cpu', num_qubits)
 
-x = QTensor([[1, 2, 3, 4]])
+x = QTensor([[1, 2, 3, 4.0]])
 x.requires_grad = True
 rlt = pqc(x)
 rlt.backward()

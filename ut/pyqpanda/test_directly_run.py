@@ -66,6 +66,9 @@ def test_multi_qubits():
 
 
 if __name__ == '__main__':
+  print('[test_single_qubit1]')
   test_single_qubit1()
+  print('[test_single_qubit]')
   test_single_qubit()
+  print('[test_multi_qubits]')
   test_multi_qubits()

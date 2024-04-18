@@ -104,7 +104,6 @@ def go():
   print('trash_qubits:', trash_qubits)
   print('total_qubits:', total_qubits)
   model = QAElayer(trash_qubits, total_qubits)
-  breakpoint()
   print('param_cnt:', sum([p.size for p in model.parameters()]))
 
   optimizer = Adam(model.parameters(), lr=0.005)

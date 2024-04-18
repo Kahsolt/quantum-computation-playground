@@ -2,7 +2,7 @@
 # Author: Armit
 # Create Time: 2023/04/23 
 
-from sklearn.svm import SVC
+#from sklearn.svm import SVC
 from pyqpanda import *
 from pyqpanda.Visualization.circuit_draw import *
 from pyvqnet.qnn.svm import vqc_qsvm, QuantumKernel_VQNet, gen_vqc_qsvm_data
@@ -22,11 +22,11 @@ print('test_labels.shape:', test_labels.shape)
 print('samples.shape:', samples.shape)
 
 ''' functional API '''
-quantum_kernel = QuantumKernel_VQNet(n_qbits=2)
-qsvm = SVC(kernel=quantum_kernel.evaluate)
-qsvm.fit(train_features, train_labels)
-score = qsvm.score(test_features, test_labels)
-print(f"quantum kernel classification test score: {score}")
+#quantum_kernel = QuantumKernel_VQNet(n_qbits=2)
+#qsvm = SVC(kernel=quantum_kernel.evaluate)
+#qsvm.fit(train_features, train_labels)
+#score = qsvm.score(test_features, test_labels)
+#print(f"quantum kernel classification test score: {score}")
 
 ''' objective API '''
 qsvm = vqc_qsvm(minibatch_size=40, maxiter=40, rep=3)

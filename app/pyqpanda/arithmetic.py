@@ -4,6 +4,7 @@
 
 from pyqpanda import *
 
+breakpoint()
 init()
 a = qAlloc_many(1)
 b = qAlloc_many(1)
@@ -13,7 +14,7 @@ e = cAlloc()
 
 print('[QAdd]') ; print(QAdd(a, b, c))
 print('[QSub]') ; print(QSub(a, b, c))
-#print('[QMul]') ; print(QMul(a, b, c, d))
-#print('[QDiv]') ; print(QDiv(a, b, c, d, e))
+print('[QMul]') ; print(QMul(a, b, c, d))
+print('[QDiv]') ; print(QDiv(a, b, c, d, e))
 
 finalize()

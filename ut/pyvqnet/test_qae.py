@@ -23,7 +23,6 @@ print('total_qubits:', total_qubits)
 model = QAElayer(trash_qubits, total_qubits)
 
 model.history_prob
-model.merge_opinfo
 model.machine
 model.clist
 model.qlist

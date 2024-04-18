@@ -7,7 +7,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import pyqpanda as pq
-from pyqpanda.Visualization.draw_probability_map import draw_probaility
+#from pyqpanda.Visualization.draw_probability_map import draw_probaility
 from pyvqnet.qnn.qgan.qgan_utils import QGANAPI
 
 # ref: https://vqnet20-tutorial.readthedocs.io/en/main/rst/qnn.html#qgan

@@ -76,7 +76,7 @@ class QCNN_2x2:
 if __name__ == '__main__':
   img = Image.open(IMG_FP)
   #img = img.convert('L')
-  img = img.resize((128, 128), resample=Image.ANTIALIAS)
+  img = img.resize((128, 128), resample=Image.Resampling.BILINEAR)
 
   im = np.asarray(img, dtype=np.float32) / 255.0
   #im = im * 2 - 1
@@ -87,7 +87,7 @@ if __name__ == '__main__':
   stats(qim, 'qim')
   qim = qim / qim.max()
 
-  plt.subplot(131) ; plt.title('Resize') ; plt.axis('off') ; plt.imshow(np.asarray(img.resize((64, 64), resample=Image.ANTIALIAS), dtype=np.float32) / 255.0)
+  plt.subplot(131) ; plt.title('Resize') ; plt.axis('off') ; plt.imshow(np.asarray(img.resize((64, 64), resample=Image.Resampling.BILINEAR), dtype=np.float32) / 255.0)
   plt.subplot(132) ; plt.title('Raw')    ; plt.axis('off') ; plt.imshow(im)
   plt.subplot(133) ; plt.title('QConv')  ; plt.axis('off') ; plt.imshow(qim)
   plt.show()

@@ -6,7 +6,7 @@ import io
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from moviepy.editor import ImageSequenceClip
+#from moviepy.editor import ImageSequenceClip
 
 import pyqpanda as pq
 from pyvqnet.tensor import QTensor
@@ -69,7 +69,7 @@ def circle(samples:int, rads=np.sqrt(2/np.pi)):
       y = [1, 0]
     data_x.append(x)
     data_y.append(y)
-  return np.array(data_x), np.array(data_y)
+  return np.array(data_x, dtype=np.float32), np.array(data_y, dtype=np.float32)
 
 def circle_grid(cuts:int, rads=np.sqrt(2/np.pi)):
   data_x, data_y = [], []
@@ -82,7 +82,7 @@ def circle_grid(cuts:int, rads=np.sqrt(2/np.pi)):
         y = [0, 1]
       data_x.append(x)
       data_y.append(y)
-  return np.array(data_x), np.array(data_y)
+  return np.array(data_x, dtype=np.float32), np.array(data_y, dtype=np.float32)
 
 def cross(samples:int) :
   data_x, data_y = [], []
@@ -93,7 +93,7 @@ def cross(samples:int) :
       y = [1, 0]
     data_x.append(x)
     data_y.append(y)
-  return np.array(data_x), np.array(data_y)
+  return np.array(data_x, dtype=np.float32), np.array(data_y, dtype=np.float32)
 
 def cross_grid(cuts:int):
   data_x, data_y = [], []
@@ -106,7 +106,7 @@ def cross_grid(cuts:int):
         y = [0, 1]
       data_x.append(x)
       data_y.append(y)
-  return np.array(data_x), np.array(data_y)
+  return np.array(data_x, dtype=np.float32), np.array(data_y, dtype=np.float32)
 
 def gen_batch(x_data, label, batch_size):
   for i in range(0, x_data.shape[0] - batch_size + 1, batch_size):
@@ -140,7 +140,7 @@ def train(epoch=10, batch_size=32):
   for i in range(epoch):
     losses = 0
     for Xt, Yt in gen_batch(x_train, y_train, batch_size):
-      X, Y = QTensor(Xt), QTensor(Yt)
+      X, Y = QTensor(Xt.astype(np.float32)), QTensor(Yt.astype(np.float32))
       output = model(X)
 
       loss = creterion(Y, output)
@@ -156,8 +156,8 @@ def train(epoch=10, batch_size=32):
 
     imgs.append(show_grid(batch_size=100, title=f'epoch-{i}, acc={ok / total:.3%}', show=False))
 
-  clip = ImageSequenceClip(imgs, fps=12)
-  clip.write_gif(f'img/qnet_clf_{expname}.gif')
+  #clip = ImageSequenceClip(imgs, fps=12)
+  #clip.write_gif(f'img/qnet_clf_{expname}.gif')
 
 
 def test(batch_size=1):
@@ -171,7 +171,7 @@ def test(batch_size=1):
   total, ok = 0, 0
   model.eval()
   for X, Y in gen_batch(x_test, y_test, batch_size):
-    X, Y = QTensor(X), QTensor(Y)
+    X, Y = QTensor(X.astype(np.float32)), QTensor(Y.astype(np.float32))
     output = model(X)
     
     total += batch_size
@@ -191,7 +191,7 @@ def show_grid(batch_size=100, title=None, show=True):
   model.eval()
   preds = []
   for X, Y in gen_batch(x_test, y_test, batch_size):
-    X, Y = QTensor(X), QTensor(Y)
+    X, Y = QTensor(X.astype(np.float32)), QTensor(Y.astype(np.float32))
     output = model(X)
     preds.append(output.to_numpy().argmax(-1))
   preds = np.concatenate(preds, axis=0)
@@ -223,7 +223,7 @@ def pgd_attack(steps=40, alpha=0.01):
   Y = QTensor(y_test)
   imgs = []
   for i in range(steps):
-    X = QTensor(x_test)
+    X = QTensor(x_test.astype(np.float32))
     X.requires_grad = True
 
     output = model(X)
@@ -246,8 +246,8 @@ def pgd_attack(steps=40, alpha=0.01):
     plt.savefig(img_buf, format='png')
     imgs.append(np.asarray(Image.open(img_buf)))
 
-  clip = ImageSequenceClip(imgs, fps=12)
-  clip.write_gif('img/pgd.gif')
+  #clip = ImageSequenceClip(imgs, fps=12)
+  #clip.write_gif('img/pgd.gif')
 
 
 if __name__ == '__main__':
