@@ -16,3 +16,7 @@ log/
 # repos
 repo/*
 !repo/*.cmd
+
+# alive_board
+tmp_alive_board.json
+API_KEY.txt
