@@ -69,7 +69,7 @@ if __name__=="__main__":
     'Z3 Z5': 0.1,
     'Z3 Z6': 0.1,
   }
-  Hp = PauliOperator(problem2)
+  Hp = PauliOperator(problem3)
   qubit_num = Hp.getMaxIndex() + 1
   print('qubit_num:', qubit_num)
 

@@ -3,15 +3,16 @@
 # Create Time: 2023/04/20 
 
 import numpy as np
-from pyqpanda import *
 import pyqpanda as pq
 import pyqpanda.Visualization as pqvis
+
+from pyqpanda import *
+
 
 qvm = CPUQVM()
 qvm.init_qvm()
 qv = qvm.qAlloc_many(2)
 cv = qvm.cAlloc_many(1)
-
 
 ''' pqvis.circuit_draw '''
 pqvis.draw_qprog
@@ -24,12 +25,11 @@ pqvis.draw_qprog(prog, output='pic', scale=0.8, filename='qc.png', with_logo=Tru
 print(draw_qprog_text(prog))
 print(draw_qprog_text_with_clock(prog))
 print(draw_qprog_latex(prog))
-print(draw_qprog_latex_with_clock(prog))
-
+#print(draw_qprog_latex_with_clock(prog))
 
 ''' pqvis.draw_probability_map '''
-pqvis.draw_probaility
-pqvis.draw_probaility_dict
+pqvis.draw_probability
+pqvis.draw_probability_dict
 
 probs = {
   '00': 0.0,
@@ -37,9 +37,8 @@ probs = {
   '10': 0.3,
   '11': 0.2,
 }
-pqvis.draw_probaility(probs)
-pqvis.draw_probaility_dict(probs)   # this will ignore all zero prob items
-
+pqvis.draw_probability(probs)
+pqvis.draw_probability_dict(probs)   # this will ignore all zero prob items
 
 pqvis.quantum_state_plot
 pqvis.plot_state_city
@@ -47,9 +46,8 @@ pqvis.plot_density_matrix
 pqvis.state_to_density_matrix
 
 q = np.array([0.2241+0.483j , 0.8365-0.1294j])
-pqvis.plot_state_city(q, title='real/imag of rho')
-pqvis.plot_density_matrix(pqvis.state_to_density_matrix(q))
-
+#pqvis.plot_state_city(q, title='real/imag of rho')           # <- AttributeError
+#pqvis.plot_density_matrix(pqvis.state_to_density_matrix(q))  # <- AttributeError
 
 pqvis.bloch_plot
 pqvis.plot_bloch_circuit
@@ -65,7 +63,6 @@ pqvis.plot_bloch_circuit(RY(qv[0], 2.4))
 pqvis.plot_bloch_circuit(RZ(qv[0], 2.4))
 
 pqvis.plot_bloch_multivector(q)
-
 
 print(pqvis.pi_check.pi_check(3.14159/2))
 print(pqvis.pi_check.pi_check(3.141592/2))
