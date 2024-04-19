@@ -3,19 +3,17 @@
 # Create Time: 2023/04/14 
 
 import sys
-import pyqpanda
+import pychemiq
 from distutils import sysconfig
 
 site_packages_path = sysconfig.get_python_lib().lower()
 print('site-package path:', site_packages_path)
 
-Module = type(pyqpanda)
+Module = type(pychemiq)
 mods_checked = set()
 name_ignored = [
-  '_core', '_vqnet', 'pywrap', 'sm4',
-  'numpy', 'np', 'sparse', 
-  'matplotlib', 'mpl', 'plt', 'mcolors', 'animation', 'patches',
-  'requests', 
+  'numpy', 'np',
+  'matplotlib', 'mpl', 'plt', 
 ]
 import typing ; name_ignored.extend([name for name in dir(typing)])
 import abc    ; name_ignored.extend([name for name in dir(abc)])
@@ -31,13 +29,13 @@ def walk(mod:Module, path:str, fh):
     except: continue
     subpath = f'{path}.{name}'
     if isinstance(obj, Module):
-      if not obj.__file__.lower().startswith(site_packages_path): continue
+      if obj.__file__  and not obj.__file__.lower().startswith(site_packages_path): continue
       if obj in mods_checked: continue
       walk(obj, subpath, fh)
     else:
       fh.write(subpath + '\n')
 
 with open('api_list.txt', 'w', encoding='utf-8') as fh:
-  walk(pyqpanda, 'pyqpanda', fh)
+  walk(pychemiq, 'pychemiq', fh)
 
 print('Done')

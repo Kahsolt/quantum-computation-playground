@@ -7,9 +7,6 @@ __pycache__/
 data/
 ref/
 
-# generated
-api_list*.txt
-
 # logs & weights
 log/
 
